@@ -80,6 +80,8 @@ public abstract class BeanFactoryUtils {
 	 */
 	public static String transformedBeanName(String name) {
 		Assert.notNull(name, "'name' must not be null");
+		//String FACTORY_BEAN_PREFIX = "&";
+		//beanName不是以"&"开头,就直接返回beanName,
 		if (!name.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 			return name;
 		}
@@ -90,6 +92,13 @@ public abstract class BeanFactoryUtils {
 			while (beanName.startsWith(BeanFactory.FACTORY_BEAN_PREFIX));
 			return beanName;
 		});
+	}
+
+	public static void main(String[] args) {
+		String  beanName = "&dddd";
+		System.out.println("处理前的beanName: " +beanName);
+		beanName =transformedBeanName(beanName);
+		System.out.println("处理后的beanName: " +beanName);
 	}
 
 	/**

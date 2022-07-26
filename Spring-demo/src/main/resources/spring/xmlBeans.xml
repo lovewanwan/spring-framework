@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="xmlLiftCycleBean" class="com.th.lifecycle.xmlpage.XmlLifeCycleBean">
+		<property name="webName" value="java设计模式"></property>
+		<property name="url" value="hopefactoring.com"></property>
+	</bean>
+	<alias name="xmlLiftCycleBean" alias="liftcycleBean"></alias>
+	<alias name="xmlLiftCycleBean" alias="xmlBean"></alias>
+
+	<import resource="xmlBeans.xml"></import>
+	<import resource="aopBeans.xml"></import>
+</beans>

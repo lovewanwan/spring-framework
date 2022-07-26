@@ -167,6 +167,7 @@ public class ReaderContext {
 
 	/**
 	 * Fire an alias-registered event.
+	 * 触发一个alias注册事件
 	 */
 	public void fireAliasRegistered(String beanName, String alias, @Nullable Object source) {
 		this.eventListener.aliasRegistered(new AliasDefinition(beanName, alias, source));

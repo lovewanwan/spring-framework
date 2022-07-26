@@ -80,6 +80,7 @@ public class MethodOverrides {
 
 	/**
 	 * Return whether the set of method overrides is empty.
+	 * 返回方法重写集是否为空
 	 */
 	public boolean isEmpty() {
 		return this.overrides.isEmpty();

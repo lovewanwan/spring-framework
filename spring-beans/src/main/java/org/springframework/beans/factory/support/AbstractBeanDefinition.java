@@ -141,65 +141,150 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private volatile Object beanClass;
 
+	/**
+	 * bean的作用范围,对应bean属性scope
+	 */
 	@Nullable
 	private String scope = SCOPE_DEFAULT;
 
+	/**
+	 * 是否是抽象,对应bean属性abstract
+	 */
 	private boolean abstractFlag = false;
 
+	/**
+	 * 是否延迟加载,对应bean属性lazy-init
+	 */
 	@Nullable
 	private Boolean lazyInit;
 
+	/**
+	 * 自动注入模式,对应bean属性autowire
+	 */
 	private int autowireMode = AUTOWIRE_NO;
 
+	/**
+	 * 依赖检查,Spring3.0后此属性被弃用了
+	 */
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
+	/**
+	 * 用来表示一个bean的实例化依靠另一个bean先实例化,对应bean属性depend-on
+	 */
 	@Nullable
 	private String[] dependsOn;
 
+	/**
+	 * autowire-Candidate属性设置为false,这样容器在查找自动装配对象时,将不考虑该bean,即它不会
+	 * 考虑作为其他bean自动装配的候选者,但是该bean本身还是可以使用自动装配来注入其他bean的,
+	 * 对应bean属性autowire-Candidate
+	 */
 	private boolean autowireCandidate = true;
 
+	/**
+	 * 自动装配时当出现多个bean候选者时,将作为首选者,对应bean属性primary
+	 */
 	private boolean primary = false;
 
+	/**
+	 * 用于记录qualifier,对应元素qualifier
+	 */
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
 
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	/**
+	 * 允许访问非公开的构造器和方法,程序设置
+	 */
 	private boolean nonPublicAccessAllowed = true;
 
+	/**
+	 * 是否以一种宽松的模式解析构造函数,默认是true.
+	 * 如果为false,则在如下情况
+	 *interface ITest {}
+	 * class ITestimpl 工mplements ITest {} ;
+	 * class Main{
+	 *   Main( ITest i ) {}
+	 *   Main ( ITestimpl i) {}
+	 *}
+	 * 抛出异常,因为Spring 无法准确定位哪个构造函数
+	 * 由程序设置
+	 *
+	 */
 	private boolean lenientConstructorResolution = true;
-
+	/**
+	 * ＊ 对应bean属性factory-bean, 用法．
+	 *  <bean id ＝ ”instanceFactoryBean” class ＝ ”example.chapter3 . InstanceFact 。ryBean ” ／〉
+	 *  <bean id ＝ ”currenttime"  factory-bean = ” instanceFactoryBean ” factory-method ＝ ”createTime” />
+	 */
 	@Nullable
 	private String factoryBeanName;
-
+	/**
+	 * 对应bean属性factory-method
+	 */
 	@Nullable
 	private String factoryMethodName;
 
+	/**
+	 * 记录构造函数注入属性,对应bean属性constructor-arg
+	 */
 	@Nullable
 	private ConstructorArgumentValues constructorArgumentValues;
 
+	/**
+	 * 普通属性集合
+	 */
 	@Nullable
 	private MutablePropertyValues propertyValues;
 
+	/**
+	 * 方法重写的持有者,记录lookup-method,replaced-method元素
+	 */
 	private MethodOverrides methodOverrides = new MethodOverrides();
 
+	/**
+	 * 初始化方法,对应bean属性init-method
+	 */
 	@Nullable
 	private String[] initMethodNames;
 
+	/**
+	 * 销毁方法,对应bean属性destory-method
+	 */
 	@Nullable
 	private String[] destroyMethodNames;
 
+	/**
+	 * 是否执行init-method,程序属性
+	 */
 	private boolean enforceInitMethod = true;
 
+	/**
+	 * 是否执行destory-method方法
+	 */
 	private boolean enforceDestroyMethod = true;
 
+	/**
+	 * 是否是用户定义的而不是应用程序本身定义的,创建aop时候为true,程序设置
+	 */
 	private boolean synthetic = false;
 
+	/**
+	 * 定义这个bean的应用,APPLICATION ： 用户， INFRASTRUCTURE ， 完全内部使用．与用户无关， SUPPORT ·
+	 * 某些复杂配置的一部分
+	 */
 	private int role = BeanDefinition.ROLE_APPLICATION;
 
+	/**
+	 * bean的描述信息
+	 */
 	@Nullable
 	private String description;
 
+	/**
+	 * bean定义的资源
+	 */
 	@Nullable
 	private Resource resource;
 
@@ -912,6 +997,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return if there are method overrides defined for this bean.
+	 * 如果此bean定义的方法重写就返回
 	 * @since 5.0.2
 	 */
 	public boolean hasMethodOverrides() {
@@ -1157,6 +1243,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Validate and prepare the method overrides defined for this bean.
 	 * Checks for existence of a method with the specified name.
+	 *
+	 * 检查并准备为此bean定义的方法重写
+	 * 检查是否存在指定名称的方法;
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
@@ -1170,10 +1259,14 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * Validate and prepare the given method override.
 	 * Checks for existence of a method with the specified name,
 	 * marking it as not overloaded if none found.
+	 * 验证并准备给定的方法重写。
+	 *检查是否存在具有指定名称的方法，
+	 *如果未找到，则将其标记为未过载。
 	 * @param mo the MethodOverride object to validate
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	protected void prepareMethodOverride(MethodOverride mo) throws BeanDefinitionValidationException {
+		//获取对应类中对应方法名称的个数
 		int count = ClassUtils.getMethodCountForName(getBeanClass(), mo.getMethodName());
 		if (count == 0) {
 			throw new BeanDefinitionValidationException(
@@ -1182,6 +1275,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		}
 		else if (count == 1) {
 			// Mark override as not overloaded, to avoid the overhead of arg type checking.
+			//标记MethodOverride暂未被覆盖,避免参数类型检查的开销.
 			mo.setOverloaded(false);
 		}
 	}

@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!--继承-->
+	<!--<bean id="animal" class="com.th.inherit.Animal">
+		<property name="name" value="动物"></property>
+		<property name="age" value="0"></property>
+	</bean>
+
+	<bean id="dog" class="com.th.inherit.Dog" parent="animal">
+		<property name="name" value="小狗"></property>
+		<property name="call" value="汪汪汪...."></property>
+
+	</bean>-->
+	<!--定义模板-->
+	<bean id="animal"  abstract="true">
+		<property name="name" value="动物"></property>
+		<property name="age" value="0"></property>
+	</bean>
+
+	<bean id="dog" class="com.th.inherit.Dog" parent="animal">
+		<property name="name" value="小狗"></property>
+		<property name="call" value="汪汪汪...."></property>
+
+	</bean>
+</beans>

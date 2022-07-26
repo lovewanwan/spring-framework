@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="javaCollection" class="com.th.settertest.JavaCollection">
+		<!--数组-->
+		<property name="courses">
+			<array>
+				<value>java</value>
+				<value>PHP</value>
+				<value>C 语言</value>
+			</array>
+		</property>
+		<!--List-->
+		<property name="list">
+			<list>
+				<value>张三</value>
+				<value>李四</value>
+				<value>王五</value>
+				<value>赵六</value>
+			</list>
+		</property>
+		<!--map-->
+		<property name="maps">
+			<map>
+				<entry key="java" value="java"></entry>
+				<entry key="php" value="php"></entry>
+			</map>
+		</property>
+
+		<!--Set-->
+		<property name="sets">
+			<set>
+				<value>MySql</value>
+				<value>Redis</value>
+			</set>
+		</property>
+	</bean>
+</beans>
