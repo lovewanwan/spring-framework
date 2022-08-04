@@ -4,8 +4,8 @@ ADD setup.sh /setup.sh
 ADD get-jdk-url.sh /get-jdk-url.sh
 RUN ./setup.sh
 
-ENV JAVA_HOME /opt/openjdk/java17
-ENV JDK17 /opt/openjdk/java17
+ENV JAVA_HOME /opt/openjdk/java11
+ENV JDK11 /opt/openjdk/java11
 ENV JDK18 /opt/openjdk/java18
 
 ENV PATH $JAVA_HOME/bin:$PATH
