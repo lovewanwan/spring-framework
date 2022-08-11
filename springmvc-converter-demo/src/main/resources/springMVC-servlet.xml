@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!--开启扫描组件-->
+	<context:component-scan base-package="com.th"/>
+
+	<!--配置thymeleaf 引擎-->
+	<bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+		<property name="order" value="1"></property>
+		<property name="characterEncoding" value="UTF-8"></property>
+		<property name="templateEngine">
+			<bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+				<property name="templateResolver">
+					<bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+						<property name="prefix" value="/WEB-INF/templetes/"></property>
+						<property name="suffix" value=".html"></property>
+						<property name="templateMode" value="HTML"></property>
+						<property name="characterEncoding" value="UTF-8"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- view-name: 设置请求地址所对应的视图名称-->
+	<mvc:view-controller path="/" view-name="user"></mvc:view-controller>
+
+	<!-- 当springmvc中设置任何一个view-controller时,其他控制器中的请求映射将全部失效,此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签-->
+	<mvc:annotation-driven conversion-service="conversionService"/>
+
+	<!--自定义类型转换配置器-->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.th.converter.MyDateConverter"></bean>
+			</set>
+		</property>
+	</bean>
+</beans>
